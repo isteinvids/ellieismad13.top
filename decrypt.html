@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <title>Decrypt Message - Comic Hacker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <style>
+      html {
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        background: linear-gradient(135deg, #f8fafc 0%, #fa88ae 100%);
+        font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
+        color: #333;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        min-width: 300px;
+        max-width: 500px;
+        margin: 40px auto;
+        background: #ffe6f4;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
+        padding: 32px;
+        border: 3px dashed #d36da2;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.2em;
+        color: #d36da2;
+        margin-bottom: 0.5rem;
+        text-shadow: 1px 1px 0px #fff;
+      }
+
+      .meow {
+        font-size: 0.9rem;
+        color: #999;
+        margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      label {
+        font-weight: bold;
+        color: #d36da2;
+        margin-top: 16px;
+        display: block;
+        margin-bottom: 6px;
+        letter-spacing: 1px;
+      }
+
+      textarea,
+      input {
+        width: 100%;
+        border: 2px solid #d36da2;
+        border-radius: 8px;
+        padding: 10px;
+        font-size: 1em;
+        background: white;
+        margin-bottom: 18px;
+        resize: vertical;
+        box-sizing: border-box;
+        font-family: inherit;
+      }
+
+      textarea {
+        min-height: 70px;
+      }
+
+      button {
+        background: linear-gradient(90deg, #d36da2 0%, #f69de5 100%);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        padding: 12px 32px;
+        font-size: 1.1em;
+        font-family: inherit;
+        font-weight: bold;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(120, 80, 180, 0.10);
+        transition: background 0.2s;
+        margin-bottom: 16px;
+      }
+
+      button:hover {
+        background: linear-gradient(270deg, #b9548c 0%, #f69de5 100%);
+      }
+
+      .output {
+        background: #ffe9f1;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 12px;
+        font-size: 1.1em;
+        color: #333;
+        min-height: 40px;
+        word-break: break-word;
+        border: 2px dashed #d36da2;
+      }
+
+      .comic-bubble {
+        position: relative;
+        background: #fff8fc;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
+        border: 3px dashed #d36da2;
+        margin-bottom: 24px;
+      }
+
+      .comic-bubble:after {
+        content: '';
+        position: absolute;
+        left: 40px;
+        bottom: -20px;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top: 20px solid #fff8fc;
+        border-bottom: 0;
+      }
+
+      #splow {
+        position: fixed;
+        text-align: center;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.5) rotate(-15deg);
+        background: radial-gradient(circle at center, #fff 30%, #f69de5 90%);
+        border: 8px solid #d36da2;
+        border-radius: 50%;
+        padding: 5rem 7rem;
+        font-size: 5rem;
+        color: #b3006b;
+        font-weight: 900;
+        z-index: 9999;
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        box-shadow: 0 0 100px rgba(255, 0, 130, 0.5);
+        text-shadow: 2px 2px 0 #fff;
+        font-family: 'Luckiest Guy', cursive;
+      }
+
+      #splow.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container ">
+      <div id="splow">meow!</div>
+      <h1>decrypt.html</h1>
+      <div class="meow">(meow. this is not for you.)</div>
+      <form id="decryptForm" autocomplete="off">
+        <label for="encrypted">Encrypted Message</label>
+        <textarea id="encrypted" placeholder="Paste armored encrypted message here"></textarea>
+        <label for="privateKey">PGP Private Key</label>
+        <textarea id="privateKey" placeholder="Paste your PGP private key here"></textarea>
+        <label for="passphrase">Passphrase</label>
+        <input type="password" id="passphrase" placeholder="Enter your passphrase">
+        <div class="meow">✧ decrypt secrets with your PGP key ✧</div>
+        <button type="submit">decrypt it</button>
+      </form>
+      <div class="output " id="output"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/openpgp@6.1.1/dist/openpgp.min.js"></script>
+    <script>
+      function showMeowSplash(text) {
+        const splow = document.getElementById('splow');
+        splow.textContent = text || 'meow!';
+        splow.classList.add('show');
+        setTimeout(() => {
+          splow.classList.remove('show');
+        }, 300 + (text ? text.length * 30 : 0));
+      }
+
+      document.getElementById('decryptForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const res = await fetch('/key.pub');
+        if (!res.ok) throw new Error('failed to fetch key');
+
+        const encrypted = document.getElementById('encrypted').value.trim();
+        const privateKeyArmored = document.getElementById('privateKey').value.trim();
+        const passphrase = document.getElementById('passphrase').value;
+
+        const output = document.getElementById('output');
+
+        try {
+          // confirm that the encrypted message has been encrypted with our public key (res)
+
+          const privateKey = await openpgp.readPrivateKey({ armoredKey: privateKeyArmored });
+          const decryptedKey = await openpgp.decryptKey({
+            privateKey,
+            passphrase
+          });
+          const message = await openpgp.readMessage({ armoredMessage: encrypted });
+          const { data: decrypted } = await openpgp.decrypt({
+            message,
+            decryptionKeys: decryptedKey
+          });
+          output.textContent = decrypted;
+          showMeowSplash('meow!');
+        } catch (err) {
+          output.textContent = '❌ Decryption failed: ' + (err.message || err);
+          showMeowSplash('Decryption failed. Meow :(');
+        }
+      });
+    </script>
+  </body>
+
+</html>

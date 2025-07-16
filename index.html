@@ -3,24 +3,45 @@
 
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
     <title>✧ ellieismad13.top | encrypt me pls ✧</title>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
     <style>
+      html {
+        min-height: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       body {
-        background: #fff0f5;
+        min-height: 100%;
+        background: linear-gradient(135deg, #f8fafc 0%, #fa88ae 100%);
         font-family: 'Comic Neue', 'Comic Sans MS', cursive, sans-serif;
         color: #333;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 2rem;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        margin: 40px auto;
+        background: #ffe6f4;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
+        padding: 32px;
+        border: 3px dashed #d36da2;
+        max-width: 80%;
       }
 
       h1 {
-        font-size: 2rem;
-        margin-bottom: 0.5rem;
+        text-align: center;
+        font-size: 2.2em;
         color: #d36da2;
+        margin-bottom: 0.5rem;
         text-shadow: 1px 1px 0px #fff;
       }
 
@@ -28,14 +49,14 @@
         font-size: 0.9rem;
         color: #999;
         margin-bottom: 1.5rem;
+        text-align: center;
       }
 
       pre {
         background: #fff;
         border: 2px dashed #d36da2;
         padding: 1rem;
-        width: 90%;
-        max-width: 600px;
+        width: 530px;
         border-radius: 8px;
         white-space: pre-wrap;
         word-break: break-word;
@@ -46,7 +67,16 @@
         max-height: 100px;
         overflow: hidden;
         transition: max-height 0.3s ease;
-        text-align: center;
+      }
+
+      @media (max-width: 720px) {
+        h1 {
+          font-size: 1.8em;
+        }
+
+        pre {
+          width: fit-content;
+        }
       }
 
       pre.expanded {
@@ -63,8 +93,8 @@
       }
 
       textarea {
-        width: 90%;
-        max-width: 600px;
+        /* width: fit-content; */
+        /* max-width: 600px; */
         height: 150px;
         padding: 1rem;
         border-radius: 8px;
@@ -76,18 +106,22 @@
       }
 
       button {
-        background: #d36da2;
-        color: white;
+        background: linear-gradient(90deg, #d36da2 0%, #f69de5 100%);
+        color: #fff;
         border: none;
-        padding: 0.75rem 1.5rem;
-        border-radius: 999px;
+        border-radius: 8px;
+        padding: 12px 32px;
+        font-size: 1.1em;
+        font-family: inherit;
+        font-weight: bold;
         cursor: pointer;
-        font-size: 1rem;
-        box-shadow: 2px 2px 0 #aaa;
+        box-shadow: 0 2px 8px rgba(120, 80, 180, 0.10);
+        transition: background 0.2s;
+        margin-bottom: 16px;
       }
 
       button:hover {
-        background: #b9548c;
+        background: linear-gradient(270deg, #b9548c 0%, #f69de5 100%);
       }
 
       .output {
@@ -96,22 +130,26 @@
         border: 2px dotted #d36da2;
         padding: 1rem;
         border-radius: 8px;
-        width: 90%;
         max-width: 600px;
         font-family: monospace;
         font-size: 0.85rem;
         white-space: pre-wrap;
+        word-wrap: break-word;
         display: none;
-        text-align: center;
       }
 
       .copy {
         margin-top: 0.5rem;
-        display: none;
+        height: fit-content;
+      }
+
+      .grow {
+        flex-grow: 1;
       }
 
       #splow {
         position: fixed;
+        text-align: center;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) scale(0.5) rotate(-15deg);
@@ -128,6 +166,7 @@
         transition: transform 0.3s ease, opacity 0.3s ease;
         box-shadow: 0 0 100px rgba(255, 0, 130, 0.5);
         text-shadow: 2px 2px 0 #fff;
+        font-family: 'Luckiest Guy', cursive;
       }
 
       #splow.show {
@@ -135,34 +174,148 @@
         transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
       }
 
+      .comic-bubble {
+        position: relative;
+        background: #fff8fc;
+        border-radius: 18px;
+        padding: 24px;
+        box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
+        border: 3px dashed #a3a1fb;
+        margin-bottom: 24px;
+      }
+
+      .comic-bubble-face {
+        display: none;
+      }
+
+      .comic-bubble:after {
+        content: '';
+        position: absolute;
+        right: 20px;
+        bottom: -20px;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top: 20px solid #fff8fc;
+        border-bottom: 0;
+      }
+
       hr {
-        width: 90%;
-        max-width: 600px;
         border: none;
         border-top: 2px dashed #d36da2;
         margin: 2rem 0;
+      }
+    </style>
+    <style>
+      .cat-face {
+        position: relative;
+        display: inline-block;
+        min-width: 70px;
+        width: 70px;
+        height: 70px;
+        background: #e5a87c;
+        border-radius: 50%;
+        margin: 10px;
+        box-shadow: inset 0 -3px 0 #da7b37;
+      }
+
+      /* ears */
+      .cat-ear {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+        background: #e5a87c;
+        clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        top: -20px;
+      }
+
+      .cat-ear.left {
+        left: -10px;
+        transform: rotate(-35deg);
+      }
+
+      .cat-ear.right {
+        right: -10px;
+        transform: rotate(35deg);
+      }
+
+      /* eyes */
+      .cat-eyes {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        width: 60%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateX(-50%);
+      }
+
+      .eye {
+        width: 10px;
+        height: 14px;
+        background: black;
+        border-radius: 50%;
+      }
+
+      /* nose */
+      .cat-nose {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        width: 10px;
+        height: 7px;
+        background: #c56b84;
+        border-radius: 50% / 60%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* mouth */
+      .cat-mouth {
+        position: absolute;
+        top: 68%;
+        left: 50%;
+        width: 20px;
+        height: 10px;
+        border-bottom: 2px solid #c56b84;
+        border-radius: 0 0 50% 50%;
+        transform: translateX(-50%);
       }
     </style>
   </head>
 
   <body>
 
-    <h1>✿ ellieismad13.top ✿</h1>
-    <div class="meow">(meow.)</div>
-    <div id="splow">meow!</div>
+    <div class="container">
+      <h1>✿ ellieismad13.top ✿</h1>
+      <div class="meow">(meow.)</div>
+      <div id="splow">meow!</div>
 
-    <textarea id="plaintext" placeholder="type your secret confession here..."></textarea>
-    <br>
-    <div class="meow">✧ encrypt your secrets with my PGP key ✧</div>
-    <button onclick="encryptText()">encrypt it ✧</button>
+      <textarea id="plaintext" placeholder="type your secret confession here..."></textarea>
+      <br>
+      <div class="meow">✧ encrypt your secrets with my PGP key ✧</div>
+      <button onclick="encryptText()">encrypt it</button>
 
-    <div id="output" class="output"></div>
-    <button onclick="copyOutput()" class="copy">copy to clipboard</button>
+      <div id="output" class="output comic-bubble"></div>
+      <div class="comic-bubble-face">
+        <button onclick="copyOutput()" class="copy">copy to clipboard</button>
+        <div class="grow"></div>
+        <div class="cat-face">
+          <div class="cat-ear left"></div>
+          <div class="cat-ear right"></div>
+          <div class="cat-eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+          </div>
+          <div class="cat-nose"></div>
+          <div class="cat-mouth"></div>
+        </div>
+      </div>
 
-    <hr>
+      <hr>
 
-    <pre id="pgp-key">loading key... meow...</pre>
-    <div class="toggle-key" onclick="toggleKey()">show full key</div>
+      <pre id="pgp-key">loading key... meow...</pre>
+      <div class="toggle-key" onclick="toggleKey()">show full key</div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/openpgp@6.1.1/dist/openpgp.min.js"></script>
     <script>
@@ -194,7 +347,7 @@
         splow.classList.add('show');
         setTimeout(() => {
           splow.classList.remove('show');
-        }, 400);
+        }, 300 + (text ? text.length * 30 : 0));
       }
 
       async function encryptText() {
@@ -214,7 +367,7 @@
           output.scrollIntoView({ behavior: 'smooth' });
 
           // show copy
-          document.querySelector('.copy').style.display = 'block';
+          document.querySelector('.comic-bubble-face').style.display = 'flex';
 
           showMeowSplash();
         } catch (err) {

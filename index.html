@@ -102,6 +102,20 @@
         display: none;
       }
 
+      #pgp-key .top-header-hidden,
+      #pgp-key .bottom-footer-hidden {
+        opacity: 0;
+        height: 0;
+        /* we still want it to be selectable, for the copy/paste */
+      }
+
+      #pgp-key .top-header span,
+      #pgp-key .bottom-footer span {
+        min-width: fit-content;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
       #pgp-key .top-header,
       #pgp-key .bottom-footer,
       #pgp-key .key-content {
@@ -117,8 +131,27 @@
 
       #pgp-key .top-header,
       #pgp-key .bottom-footer {
+        display: flex;
+        justify-content: space-between;
         font-weight: bold;
         color: #d36da2;
+      }
+
+      @media (max-width: 700px) {
+        #pgp-key .key-content {
+          font-size: 1.8vw;
+        }
+      }
+
+      @media (max-width: 470px) {
+        #pgp-key .key-content {
+          font-size: 1.7vw;
+        }
+
+        #pgp-key .top-header,
+        #pgp-key .bottom-footer {
+          justify-content: center;
+        }
       }
 
       @media (max-width: 720px) {
@@ -372,9 +405,11 @@
       <hr title="dividing very carefully">
 
       <div id="pgp-key">
+        <div class="top-header-hidden"></div>
         <div class="top-header"></div>
         <div class="key-content"></div>
         <div class="bottom-footer"></div>
+        <div class="bottom-footer-hidden"></div>
       </div>
       <div class="toggle-key" onclick="toggleKey()" title="show the whole fucking key">show full key</div>
     </div>
@@ -396,9 +431,21 @@
 
           // pubkeyArmored = pubkeyArmored.replace(header[0], '').replace(footer[0], '').trim();
 
-          document.querySelector('#pgp-key .top-header').textContent = header[0].trim();
           document.querySelector('#pgp-key .key-content').textContent = "\n" + keyContent + "\n\n";
-          document.querySelector('#pgp-key .bottom-footer').textContent = footer[0].trim();
+          document.querySelector('#pgp-key .top-header-hidden').textContent = header[0].trim();
+          document.querySelector('#pgp-key .bottom-footer-hidden').textContent = footer[0].trim();
+
+          // for top-header and bottom-footer, put each character in a span
+          for (let char of header[0].trim()) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            document.querySelector('#pgp-key .top-header').appendChild(span);
+          }
+          for (let char of footer[0].trim()) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            document.querySelector('#pgp-key .bottom-footer').appendChild(span);
+          }
         } catch (err) {
           console.error('Failed to load PGP key:', err);
           document.querySelector('#pgp-key .key-content').textContent = 'failed to load key. meow :(';

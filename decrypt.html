@@ -28,14 +28,14 @@
       .container {
         display: flex;
         flex-direction: column;
-        min-width: 300px;
-        max-width: 500px;
         margin: 40px auto;
         background: #ffe6f4;
         border-radius: 18px;
         box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
         padding: 32px;
         border: 3px dashed #d36da2;
+        width: 80%;
+        max-width: 636px;
       }
 
       h1 {
@@ -166,7 +166,7 @@
     <div class="container ">
       <div id="splow">meow!</div>
       <h1>decrypt.html</h1>
-      <div class="meow">(meow. this is not for you.)</div>
+      <div class="meow" title="this is for me. ellie.">(meow. this is not for you.)</div>
       <form id="decryptForm" autocomplete="off">
         <label for="encrypted">Encrypted Message</label>
         <textarea id="encrypted" placeholder="Paste armored encrypted message here"></textarea>
@@ -174,7 +174,7 @@
         <textarea id="privateKey" placeholder="Paste your PGP private key here"></textarea>
         <label for="passphrase">Passphrase</label>
         <input type="password" id="passphrase" placeholder="Enter your passphrase">
-        <div class="meow">✧ decrypt secrets with your PGP key ✧</div>
+        <div class="meow">✧ decrypt all the secrets you have been told ✧</div>
         <button type="submit">decrypt it</button>
       </form>
       <div class="output " id="output"></div>

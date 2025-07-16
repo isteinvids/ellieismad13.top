@@ -34,7 +34,8 @@
         box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
         padding: 32px;
         border: 3px dashed #d36da2;
-        max-width: 80%;
+        width: 80%;
+        max-width: 636px;
       }
 
       h1 {
@@ -185,7 +186,7 @@
       }
 
       .comic-bubble-face {
-        display: none;
+        display: flex;
       }
 
       .comic-bubble:after {
@@ -198,6 +199,10 @@
         border: 20px solid transparent;
         border-top: 20px solid #fff8fc;
         border-bottom: 0;
+      }
+
+      .output-text {
+        display: none;
       }
 
       hr {
@@ -286,20 +291,20 @@
   <body>
 
     <div class="container">
-      <h1>✿ ellieismad13.top ✿</h1>
+      <h1 title="this domain cost me €2.50">✿ ellieismad13.top ✿</h1>
       <div class="meow">(meow.)</div>
       <div id="splow">meow!</div>
 
-      <textarea id="plaintext" placeholder="type your secret confession here..."></textarea>
+      <textarea id="plaintext" placeholder="type your secret confession here..." title="enter the cursed text"></textarea>
       <br>
       <div class="meow">✧ encrypt your secrets with my PGP key ✧</div>
-      <button onclick="encryptText()">encrypt it</button>
+      <button onclick="encryptText()" title="encrypt this mess">encrypt it</button>
 
-      <div id="output" class="output comic-bubble"></div>
-      <div class="comic-bubble-face">
-        <button onclick="copyOutput()" class="copy">copy to clipboard</button>
+      <div id="output" class="output comic-bubble" title="this is your encrypted cringe"></div>
+      <div class="comic-bubble-face output-text">
+        <button onclick="copyOutput()" class="copy" title="paste ellie your encrypted secrets! (legally) 📋">copy to clipboard</button>
         <div class="grow"></div>
-        <div class="cat-face">
+        <div class="cat-face" title="(the cat is saying the message)">
           <div class="cat-ear left"></div>
           <div class="cat-ear right"></div>
           <div class="cat-eyes">
@@ -311,10 +316,10 @@
         </div>
       </div>
 
-      <hr>
+      <hr title="dividing very carefully">
 
       <pre id="pgp-key">loading key... meow...</pre>
-      <div class="toggle-key" onclick="toggleKey()">show full key</div>
+      <div class="toggle-key" onclick="toggleKey()" title="show the whole fucking key">show full key</div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/openpgp@6.1.1/dist/openpgp.min.js"></script>
@@ -367,7 +372,7 @@
           output.scrollIntoView({ behavior: 'smooth' });
 
           // show copy
-          document.querySelector('.comic-bubble-face').style.display = 'flex';
+          document.querySelector('.output-text').style.display = 'flex';
 
           showMeowSplash();
         } catch (err) {

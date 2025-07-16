@@ -449,6 +449,10 @@
           document.querySelector('#pgp-key .top-header-hidden').textContent = header[0].trim();
           document.querySelector('#pgp-key .bottom-footer-hidden').textContent = footer[0].trim();
 
+          // empty the top-header and bottom-footer
+          document.querySelector('#pgp-key .top-header').textContent = '';
+          document.querySelector('#pgp-key .bottom-footer').textContent = '';
+
           // for top-header and bottom-footer, put each character in a span
           for (let char of header[0].trim()) {
             const span = document.createElement('span');
@@ -505,6 +509,10 @@
           output.querySelector('.key-content').textContent = "\n" + keyContent + "\n\n";
           output.querySelector('.top-header-hidden').textContent = topHeader[0].trim();
           output.querySelector('.bottom-footer-hidden').textContent = bottomFooter[0].trim();
+
+          // empty the top-header and bottom-footer
+          output.querySelector('.top-header').textContent = '';
+          output.querySelector('.bottom-footer').textContent = '';
 
           // for top-header and bottom-footer, put each character in a span
           for (let char of topHeader[0].trim()) {

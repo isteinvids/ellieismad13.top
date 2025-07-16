@@ -25,6 +25,100 @@
         align-items: center;
       }
 
+      .pgp-text {
+        position: relative;
+        background: #fff;
+        border: 2px dashed #d36da2;
+        padding: 1rem;
+        width: auto;
+        text-align: center;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+        font-family: monospace;
+        font-size: 0.85rem;
+        color: #555;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+
+        display: flex;
+        flex-direction: column;
+      }
+
+      .pgp-text::after {
+        content: "";
+        /* color: #d36da2;
+        text-shadow: 1px 1px 3px white;
+        font-size: 0.9rem; */
+        text-decoration: underline;
+        cursor: pointer;
+
+        align-content: end;
+        padding: 10px;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 3rem;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff0f5);
+        pointer-events: none;
+
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        mask-image: linear-gradient(to bottom, transparent, #fff);
+      }
+
+      .pgp-text .top-header-hidden,
+      .pgp-text .bottom-footer-hidden {
+        opacity: 0;
+        height: 0;
+        /* we still want it to be selectable, for the copy/paste */
+      }
+
+      .pgp-text .top-header span,
+      .pgp-text .bottom-footer span {
+        min-width: fit-content;
+        user-select: none;
+        -webkit-user-select: none;
+      }
+
+      .pgp-text .top-header,
+      .pgp-text .bottom-footer,
+      .pgp-text .key-content {
+        white-space: pre-wrap;
+        word-break: break-word;
+        margin-bottom: 0.5rem;
+      }
+
+      .pgp-text .key-content {
+        text-align: left;
+        align-self: center;
+      }
+
+      .pgp-text .top-header,
+      .pgp-text .bottom-footer {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        color: #d36da2;
+      }
+
+      @media (max-width: 700px) {
+        .pgp-text .key-content {
+          font-size: 1.8vw;
+        }
+      }
+
+      @media (max-width: 470px) {
+        .pgp-text .key-content {
+          font-size: 1.7vw;
+        }
+
+        .pgp-text .top-header,
+        .pgp-text .bottom-footer {
+          justify-content: center;
+        }
+      }
+
       .container {
         display: flex;
         flex-direction: column;
@@ -53,107 +147,6 @@
         text-align: center;
       }
 
-      #pgp-key {
-        position: relative;
-        background: #fff;
-        border: 2px dashed #d36da2;
-        padding: 1rem;
-        /* width: 530px; */
-        width: auto;
-        text-align: center;
-        border-radius: 8px;
-        margin-bottom: 0.5rem;
-        font-family: monospace;
-        font-size: 0.85rem;
-        color: #555;
-        max-height: 100px;
-        overflow: hidden;
-        transition: max-height 0.3s ease;
-
-        display: flex;
-        flex-direction: column;
-      }
-
-      #pgp-key::after {
-        content: "";
-        /* color: #d36da2;
-        text-shadow: 1px 1px 3px white;
-        font-size: 0.9rem; */
-        text-decoration: underline;
-        cursor: pointer;
-
-        align-content: end;
-        padding: 10px;
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3rem;
-        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #fff0f5);
-        pointer-events: none;
-
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        mask-image: linear-gradient(to bottom, transparent, #fff);
-      }
-
-      /* remove the after if expanded */
-      #pgp-key.expanded::after {
-        display: none;
-      }
-
-      #pgp-key .top-header-hidden,
-      #pgp-key .bottom-footer-hidden {
-        opacity: 0;
-        height: 0;
-        /* we still want it to be selectable, for the copy/paste */
-      }
-
-      #pgp-key .top-header span,
-      #pgp-key .bottom-footer span {
-        min-width: fit-content;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-
-      #pgp-key .top-header,
-      #pgp-key .bottom-footer,
-      #pgp-key .key-content {
-        white-space: pre-wrap;
-        word-break: break-word;
-        margin-bottom: 0.5rem;
-      }
-
-      #pgp-key .key-content {
-        text-align: left;
-        align-self: center;
-      }
-
-      #pgp-key .top-header,
-      #pgp-key .bottom-footer {
-        display: flex;
-        justify-content: space-between;
-        font-weight: bold;
-        color: #d36da2;
-      }
-
-      @media (max-width: 700px) {
-        #pgp-key .key-content {
-          font-size: 1.8vw;
-        }
-      }
-
-      @media (max-width: 470px) {
-        #pgp-key .key-content {
-          font-size: 1.7vw;
-        }
-
-        #pgp-key .top-header,
-        #pgp-key .bottom-footer {
-          justify-content: center;
-        }
-      }
-
       @media (max-width: 720px) {
         h1 {
           font-size: 1.8em;
@@ -164,9 +157,18 @@
         }
       }
 
+      #pgp-key {
+        max-height: 100px;
+      }
+
       #pgp-key.expanded {
         max-height: none;
         overflow: auto;
+      }
+
+      /* remove the after if expanded */
+      #pgp-key.expanded::after {
+        display: none;
       }
 
       .toggle-key {
@@ -257,6 +259,10 @@
       #splow.show {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1.2) rotate(0deg);
+      }
+
+      #output {
+        display: none;
       }
 
       .comic-bubble {
@@ -383,9 +389,17 @@
         title="enter the cursed text"></textarea>
       <br>
       <div class="meow">✧ encrypt your secrets with my PGP key ✧</div>
-      <button onclick="encryptText()" title="encrypt this mess">encrypt it</button>
+      <div style="margin-bottom: 10px;">
+        <button onclick="encryptText()" title="encrypt this mess">encrypt it</button>
+      </div>
 
-      <div id="output" class="output comic-bubble" title="this is your encrypted cringe"></div>
+      <div id="output" class="pgp-text comic-bubble" title="this is your encrypted cringe">
+        <div class="top-header-hidden"></div>
+        <div class="top-header"></div>
+        <div class="key-content"></div>
+        <div class="bottom-footer"></div>
+        <div class="bottom-footer-hidden"></div>
+      </div>
       <div class="comic-bubble-face output-text">
         <button onclick="copyOutput()" class="copy" title="paste ellie your encrypted secrets! (legally) 📋">copy to
           clipboard</button>
@@ -404,7 +418,7 @@
 
       <hr title="dividing very carefully">
 
-      <div id="pgp-key">
+      <div id="pgp-key" class="pgp-text">
         <div class="top-header-hidden"></div>
         <div class="top-header"></div>
         <div class="key-content"></div>
@@ -481,10 +495,28 @@
             encryptionKeys: pubKey
           });
 
+          const topHeader = encrypted.match(/-----BEGIN PGP MESSAGE-----/);
+          const bottomFooter = encrypted.match(/-----END PGP MESSAGE-----/);
+          const keyContent = encrypted.replace(topHeader[0], '').replace(bottomFooter[0], '').trim();
+
           const output = document.getElementById('output');
-          output.textContent = encrypted;
-          output.style.display = 'block';
-          output.scrollIntoView({ behavior: 'smooth' });
+
+          output.style.display = 'flex';
+          output.querySelector('.key-content').textContent = "\n" + keyContent + "\n\n";
+          output.querySelector('.top-header-hidden').textContent = topHeader[0].trim();
+          output.querySelector('.bottom-footer-hidden').textContent = bottomFooter[0].trim();
+
+          // for top-header and bottom-footer, put each character in a span
+          for (let char of topHeader[0].trim()) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            output.querySelector('.top-header').appendChild(span);
+          }
+          for (let char of bottomFooter[0].trim()) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            output.querySelector('.bottom-footer').appendChild(span);
+          }
 
           // show copy
           document.querySelector('.output-text').style.display = 'flex';
@@ -515,9 +547,9 @@
 
       function copyOutput() {
         const output = document.getElementById('output');
-        navigator.clipboard.writeText(output.textContent)
-          .then(() => showMeowSplash('copied. meow!'))
-          .catch(() => showMeowSplash('copy failed. meow. :('));
+        // get all the text but without the hidden spans
+        const textToCopy = output.querySelector('.top-header').textContent + "\n" + output.querySelector('.key-content').textContent + "\n" + output.querySelector('.bottom-footer').textContent;
+        navigator.clipboard.writeText(textToCopy).then(() => showMeowSplash('copied. meow!')).catch(() => showMeowSplash('copy failed. meow. :('));
       }
     </script>
 

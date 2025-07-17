@@ -338,7 +338,12 @@
       hr {
         border: none;
         border-top: 2px dashed #d36da2;
-        margin: 2rem 0;
+        margin-bottom: 2rem;
+        width: 100%;
+      }
+
+      .email-meow {
+        display: none;
       }
     </style>
     <style>
@@ -464,6 +469,11 @@
         </div>
       </div>
 
+      <div class="smaller-meow email-meow">
+        i created the email address idiot@ellieismad13.top, because it's funny.
+        you could email me there.
+        but please don't.
+      </div>
       <hr title="dividing very carefully">
 
       <h2>✧ my pgp public key !!1 ✧</h2>
@@ -482,6 +492,7 @@
     <script src="https://cdn.jsdelivr.net/npm/openpgp@6.1.1/dist/openpgp.min.js"></script>
     <script>
       let pubkeyArmored = '';
+      const theEmail = 'idiot@ellieismad13.top';
 
       async function loadKey() {
         try {
@@ -567,6 +578,9 @@
           const bottomFooter = encrypted.match(/-----END PGP MESSAGE-----/);
           const keyContent = encrypted.replace(topHeader[0], '').replace(bottomFooter[0], '').trim();
 
+          // show .email-meow
+          document.querySelector('.email-meow').style.display = 'block';
+
           const output = document.getElementById('output');
 
           output.style.display = 'flex';
@@ -620,6 +634,19 @@
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
+      });
+
+      // when .email-meow is clicked, find the email in the element contents and select it
+      document.querySelector('.email-meow').addEventListener('click', function () {
+        const theIndex = this.textContent.indexOf(theEmail);
+        if (theIndex !== -1) {
+          const range = document.createRange();
+          range.setStart(this.firstChild, theIndex);
+          range.setEnd(this.firstChild, theIndex + theEmail.length);
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
       });
 
       function copyOutput() {

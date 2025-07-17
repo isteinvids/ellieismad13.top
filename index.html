@@ -558,6 +558,7 @@
 
         const toggle = document.querySelector('.toggle-key');
         toggle.textContent = pre.classList.contains('expanded') ? 'hide key' : 'show full key';
+        toggle.title = pre.classList.contains('expanded') ? 'hide the whole fucking key' : 'show the whole fucking key';
       }
 
       function showMeowSplash(text) {

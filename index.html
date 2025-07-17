@@ -457,7 +457,7 @@
         border-radius: 50%;
 
         rotate: 10deg;
-        
+
         /* add shadow */
         /* box-shadow: 0 2px 4px rgba(255, 0, 130, 0.3); */
         box-shadow: 0 0px 4px #e5a87c inset;
@@ -486,6 +486,7 @@
         justify-self: center;
         rotate: 5deg;
         bottom: -25px;
+        left: -5px;
       }
 
       .fingers {
@@ -493,8 +494,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 1rem;
-        animation: fingerDance 1.7s ease-in-out infinite;
       }
 
       .fingers .finger {
@@ -502,17 +501,39 @@
         text-shadow: 1px 1px 0 #00000022;
       }
 
-      @keyframes fingerDance {
+      .fingers .finger.left {
+        animation: fingerDance-l 1.7s ease-in-out infinite;
+      }
+
+      .fingers .finger.right {
+        animation: fingerDance-r 1.7s ease-in-out infinite;
+      }
+
+      @keyframes fingerDance-l {
         0% {
-          gap: 1rem;
+          margin-left: 0;
         }
 
         50% {
-          gap: 0.2rem;
+          margin-left: -0.7rem;
         }
 
         100% {
-          gap: 1rem;
+          margin-left: 0;
+        }
+      }
+
+      @keyframes fingerDance-r {
+        0% {
+          margin-left: 0;
+        }
+
+        50% {
+          margin-left: 1.2rem;
+        }
+
+        100% {
+          margin-left: 0;
         }
       }
     </style>

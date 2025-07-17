@@ -71,6 +71,11 @@ button:hover, button:focus, button:active {
 }
 
 
+.cat-face:hover {
+  /* jitter */
+  animation: jitter 0.15s infinite;
+}
+
 .cat-ear.left {
   left: 0;
 }

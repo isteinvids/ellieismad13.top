@@ -446,6 +446,29 @@
         transform: translate(-50%, -50%);
       }
 
+      .cat-blush-l,
+      .cat-blush-r {
+        position: absolute;
+        top: 61%;
+        left: 7px;
+        width: 20px;
+        height: 10px;
+        background: #ffa5c6;
+        border-radius: 50%;
+
+        rotate: 10deg;
+        
+        /* add shadow */
+        /* box-shadow: 0 2px 4px rgba(255, 0, 130, 0.3); */
+        box-shadow: 0 0px 4px #e5a87c inset;
+      }
+
+      .cat-blush-r {
+        left: auto;
+        right: 7px;
+        rotate: -10deg;
+      }
+
       /* mouth */
       .cat-mouth {
         position: absolute;
@@ -456,6 +479,41 @@
         border-bottom: 2px solid #c56b84;
         border-radius: 0 0 50% 50%;
         transform: translateX(-50%);
+      }
+
+      .fingers {
+        position: absolute;
+        justify-self: center;
+        rotate: 5deg;
+        bottom: -25px;
+      }
+
+      .fingers {
+        font-size: 2.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        animation: fingerDance 1.7s ease-in-out infinite;
+      }
+
+      .fingers .finger {
+        color: #d67c3c;
+        text-shadow: 1px 1px 0 #00000022;
+      }
+
+      @keyframes fingerDance {
+        0% {
+          gap: 1rem;
+        }
+
+        50% {
+          gap: 0.2rem;
+        }
+
+        100% {
+          gap: 1rem;
+        }
       }
     </style>
 
@@ -506,7 +564,14 @@
             <div class="eye"></div>
           </div>
           <div class="cat-nose"></div>
+          <div class="cat-blush-r"></div>
+          <div class="cat-blush-l"></div>
           <div class="cat-mouth"></div>
+
+          <div class="fingers">
+            <span class="finger left">👉</span>
+            <span class="finger right">👈</span>
+          </div>
         </div>
       </div>
 
@@ -572,6 +637,10 @@
           document.querySelector('#pgp-key .key-content').textContent = 'failed to load key. meow :(';
           showMeowSplash('key load failed. meow :(');
         }
+
+        // test. put some text in plaintext
+        document.getElementById('plaintext').value = 'hello, this is a test message. please encrypt me!';
+        encryptText(); // call encryptText to show the key in the output
       }
 
       function toggleKey() {

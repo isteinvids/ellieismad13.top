@@ -13,6 +13,7 @@
     <meta itemprop="name" content="ellieismad13.top">
     <meta itemprop="description" content="my pgp key!">
     <meta itemprop="image" content="https://ellieismad13.top/me.jpeg">
+    <link rel="apple-touch-icon" sizes="128x128" href="me.jpeg">
 
     <meta property="og:title" content="ellieismad13.top">
     <meta property="og:description" content="my pgp key!">
@@ -227,7 +228,7 @@
 
       #pgp-key.expanded {
         max-height: none;
-        overflow: auto;
+        overflow: hidden;
       }
 
       /* remove the after if expanded */
@@ -389,12 +390,12 @@
 
       .cat-ear.left {
         left: -10px;
-        transform: rotate(-35deg);
+        rotate: -35deg;
       }
 
       .cat-ear.right {
         right: -10px;
-        transform: rotate(35deg);
+        rotate: 35deg;
       }
 
       /* eyes */
@@ -439,6 +440,9 @@
         transform: translateX(-50%);
       }
     </style>
+
+    <!-- quirky.css -->
+    <link rel="stylesheet" href="quirky.css">
   </head>
 
   <body>
@@ -561,17 +565,22 @@
         toggle.title = pre.classList.contains('expanded') ? 'hide the whole fucking key' : 'show the whole fucking key';
       }
 
-      function showMeowSplash(text) {
+      function showMeowSplash(text, extr) {
         const splow = document.getElementById('splow');
         splow.textContent = text || 'meow!';
         splow.classList.add('show');
         setTimeout(() => {
           splow.classList.remove('show');
-        }, 300 + (text ? text.length * 35 : 0));
+        }, 300 + (text ? text.length * 35 : 0) + (extr || 0));
       }
 
       document.querySelector('.me').addEventListener('click', function () {
-        showMeowSplash();
+        showMeowSplash(null, 500);
+        // add .neon to body for 3 seconds
+        document.body.classList.add('neon');
+        setTimeout(() => {
+          document.body.classList.remove('neon');
+        }, 1500);
       });
 
       async function encryptText() {

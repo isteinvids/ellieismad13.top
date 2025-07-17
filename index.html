@@ -7,6 +7,10 @@
     <title>✧ ellieismad13.top | encrypt me pls ✧</title>
     <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+    <!-- favicon me.jpeg -->
+    <link rel="icon" type="image/jpeg" href="me.jpeg" />
+
     <style>
       html {
         min-height: 100%;
@@ -37,14 +41,18 @@
         font-family: monospace;
         font-size: 0.85rem;
         color: #555;
-        overflow: hidden;
         transition: max-height 0.3s ease;
 
         display: flex;
         flex-direction: column;
       }
 
-      .pgp-text::after {
+      /* pgp text style for when most of it is hidden, like in the key */
+      .pgp-text.overflow-hidden {
+        overflow: hidden;
+      }
+
+      .pgp-text.overflow-hidden::after {
         content: "";
         /* color: #d36da2;
         text-shadow: 1px 1px 3px white;
@@ -119,6 +127,18 @@
         }
       }
 
+      @media (max-width: 340px) {
+        .pgp-text .key-content {
+          font-size: 1.6vw;
+        }
+      }
+
+      @media (max-width: 270px) {
+        .pgp-text .key-content {
+          font-size: 1.5vw;
+        }
+      }
+
       .container {
         display: flex;
         flex-direction: column;
@@ -130,20 +150,46 @@
         border: 3px dashed #d36da2;
         width: 80%;
         max-width: 636px;
+        text-align: center;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+        color: #d36da2;
+        margin: 0.5rem;
+        text-shadow: 1px 1px 0px #fff;
       }
 
       h1 {
-        text-align: center;
         font-size: 2.2em;
-        color: #d36da2;
-        margin-bottom: 0.5rem;
-        text-shadow: 1px 1px 0px #fff;
+      }
+
+      h2 {
+        font-size: 1.8em;
+      }
+
+      .me {
+        background: radial-gradient(circle at center, transparent, #ffe6f4 150%), url('me.jpeg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 30%;
+        align-self: center;
+        width: 120px;
+        height: 120px;
       }
 
       .meow {
         font-size: 0.9rem;
         color: #999;
         margin-bottom: 1.5rem;
+        text-align: center;
+      }
+
+      .smaller-meow {
+        font-size: 0.8rem;
+        color: #aaa;
+        margin-bottom: 0.5rem;
         text-align: center;
       }
 
@@ -266,29 +312,23 @@
       }
 
       .comic-bubble {
-        position: relative;
-        background: #fff8fc;
-        border-radius: 18px;
-        padding: 24px;
-        box-shadow: 0 8px 24px rgba(120, 80, 180, 0.12);
-        border: 3px dashed #a3a1fb;
-        margin-bottom: 24px;
+        position: absolute;
+        right: 80px;
+        bottom: -35px;
+
+        width: 0px;
+        height: 0px;
+
+        border: 10px solid transparent;
+        border-top: 45px solid white;
+        border-bottom: 0;
+        z-index: 2;
+
+        transform: rotate(-35deg);
       }
 
       .comic-bubble-face {
         display: flex;
-      }
-
-      .comic-bubble:after {
-        content: '';
-        position: absolute;
-        right: 20px;
-        bottom: -20px;
-        width: 0;
-        height: 0;
-        border: 20px solid transparent;
-        border-top: 20px solid #fff8fc;
-        border-bottom: 0;
       }
 
       .output-text {
@@ -381,19 +421,24 @@
   <body>
 
     <div class="container">
+      <div class="me" title="do not click this"></div>
       <h1 title="this domain cost me €2.50">✿ ellieismad13.top ✿</h1>
-      <div class="meow">(meow.)</div>
+      <div class="meow" title="meows?">(meow.)</div>
       <div id="splow">meow!</div>
 
       <textarea id="plaintext" placeholder="type your secret confession here..."
         title="enter the cursed text"></textarea>
       <br>
       <div class="meow">✧ encrypt your secrets with my PGP key ✧</div>
+      <div class="smaller-meow" title="are you stupid?">ps. this won't send anything to me. it just encrypts the text
+        you enter here.
+        you'll still need to send the encrypted text to me. duh.</div>
       <div style="margin-bottom: 10px;">
         <button onclick="encryptText()" title="encrypt this mess">encrypt it</button>
       </div>
 
-      <div id="output" class="pgp-text comic-bubble" title="this is your encrypted cringe">
+      <div id="output" class="pgp-text" title="this is your encrypted cringe">
+        <div class="comic-bubble"></div>
         <div class="top-header-hidden"></div>
         <div class="top-header"></div>
         <div class="key-content"></div>
@@ -418,7 +463,10 @@
 
       <hr title="dividing very carefully">
 
-      <div id="pgp-key" class="pgp-text">
+      <h2>✧ my pgp public key !!1 ✧</h2>
+      <div class="meow">xoxo</div>
+
+      <div id="pgp-key" class="pgp-text overflow-hidden">
         <div class="top-header-hidden"></div>
         <div class="top-header"></div>
         <div class="key-content"></div>
@@ -485,13 +533,26 @@
         splow.classList.add('show');
         setTimeout(() => {
           splow.classList.remove('show');
-        }, 300 + (text ? text.length * 30 : 0));
+        }, 300 + (text ? text.length * 35 : 0));
       }
+
+      document.querySelector('.me').addEventListener('click', function () {
+        showMeowSplash();
+      });
 
       async function encryptText() {
         const plaintext = document.getElementById('plaintext').value;
 
+        if (!plaintext.trim()) {
+          showMeowSplash('you forgot text. idiot.');
+          return;
+        }
+
         try {
+          if (!pubkeyArmored) {
+            showMeowSplash('no key load. meow :(');
+            return;
+          }
           const pubKey = await openpgp.readKey({ armoredKey: pubkeyArmored });
 
           const encrypted = await openpgp.encrypt({
@@ -529,9 +590,14 @@
           // show copy
           document.querySelector('.output-text').style.display = 'flex';
 
+          // scroll to output
+          output.scrollIntoView({ behavior: 'smooth' });
+
           showMeowSplash();
         } catch (err) {
-          alert('encryption failed, meow: ' + err.message);
+          console.error('Encryption failed:', err);
+          // alert('encryption failed, meow: ' + err.message);
+          showMeowSplash(err.message);
         }
       }
 
@@ -556,7 +622,7 @@
       function copyOutput() {
         const output = document.getElementById('output');
         // get all the text but without the hidden spans
-        const textToCopy = output.querySelector('.top-header').textContent + "\n" + output.querySelector('.key-content').textContent + "\n" + output.querySelector('.bottom-footer').textContent;
+        const textToCopy = "\n" + output.querySelector('.top-header').textContent.trim() + "\n\n" + output.querySelector('.key-content').textContent.trim() + "\n\n" + output.querySelector('.bottom-footer').textContent.trim();
         navigator.clipboard.writeText(textToCopy).then(() => showMeowSplash('copied. meow!')).catch(() => showMeowSplash('copy failed. meow. :('));
       }
     </script>

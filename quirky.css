@@ -73,7 +73,7 @@ button:hover {
 
 .cat-face:hover {
   /* jitter */
-  animation: jitter 0.15s infinite;
+  animation: jitter 0.1s infinite;
 }
 
 .cat-ear.left {

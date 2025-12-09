@@ -43,7 +43,7 @@
       <div class="marquee">
         <span>my website's tld is .top because i top!!! :3</span>
       </div>
-      <div class="meow" title="the cringe is ironic! i swear!">(meow.)</div>
+      <br>
       <div id="splow">meow!</div>
 
       <textarea id="plaintext" placeholder="type your secret confession here..."
@@ -54,13 +54,16 @@
         ps. this won't send anything to me.
         or anyone else.
         it just encrypts the text you enter here.
-        you'll still need to send the encrypted text to me. duh.
+        you'll still need to send the encrypted text to me.
+      </div>
+      <div class="smaller-meow">
+        (you could tell me where i can buy more 2cb!)
       </div>
       <div style="margin-bottom: 10px;">
-        <button onclick="encryptText()" title="send me drugs. but ✧ encrypted ✧">encrypt it</button>
+        <button onclick="encryptText()" title="tell me where i can buy 2cb">encrypt it</button>
       </div>
 
-      <div id="output" class="pgp-text" title="this is your encrypted cringe">
+      <div id="output" class="pgp-text" title="this is cringe">
         <div class="comic-bubble"></div>
         <div class="top-header-hidden"></div>
         <div class="top-header"></div>
@@ -69,7 +72,7 @@
         <div class="bottom-footer-hidden"></div>
       </div>
       <div class="comic-bubble-face output-text">
-        <button onclick="copyOutput()" class="copy" title="clipboards aren't that cool">
+        <button onclick="copyOutput()" class="copy" title="clipboards aren't that real">
           copy to clipboard
         </button>
         <div class="grow"></div>
@@ -92,17 +95,12 @@
         </div>
       </div>
 
-      <div class="smaller-meow email-meow" title="please don't email me">
-        i created the email address idiot@ellieismad13.top, because it's funny.
-        you could email me there.
-        but please don't.
-      </div>
-      <hr title="dividing very carefully">
+      <hr>
 
       <h2>✧ my pgp public key !!1 ✧</h2>
       <div class="meow">xoxo</div>
 
-      <div id="pgp-key" class="pgp-text overflow-hidden" title="send me drugs. but ✧ encrypted ✧">
+      <div id="pgp-key" class="pgp-text overflow-hidden">
         <div class="top-header-hidden"></div>
         <div class="top-header"></div>
         <div class="key-content"></div>
@@ -115,7 +113,6 @@
     <script src="https://cdn.jsdelivr.net/npm/openpgp@6.1.1/dist/openpgp.min.js"></script>
     <script>
       let pubkeyArmored = '';
-      const theEmail = 'idiot@ellieismad13.top';
 
       async function loadKey() {
         try {
@@ -211,9 +208,6 @@
           const bottomFooter = encrypted.match(/-----END PGP MESSAGE-----/);
           const keyContent = encrypted.replace(topHeader[0], '').replace(bottomFooter[0], '').trim();
 
-          // show .email-meow
-          document.querySelector('.email-meow').style.display = 'block';
-
           const output = document.getElementById('output');
 
           output.style.display = 'flex';
@@ -267,19 +261,6 @@
         const sel = window.getSelection();
         sel.removeAllRanges();
         sel.addRange(range);
-      });
-
-      // when .email-meow is clicked, find the email in the element contents and select it
-      document.querySelector('.email-meow').addEventListener('click', function () {
-        const theIndex = this.textContent.indexOf(theEmail);
-        if (theIndex !== -1) {
-          const range = document.createRange();
-          range.setStart(this.firstChild, theIndex);
-          range.setEnd(this.firstChild, theIndex + theEmail.length);
-          const sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
-        }
       });
 
       function copyOutput() {

@@ -1,1 +1,177 @@
-<body style="display: flex; align-items: center; justify-self: center;">index.html</body>
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, user-scalable=no" />
+    <meta name="description" content="my pgp key!" />
+    <meta name="keywords" content="ellieismad13" />
+    <meta name="author" content="ellieismad13" />
+    <meta name="theme-color" content="#f69de5" />
+
+    <meta itemprop="name" content="ellieismad13.top">
+    <meta itemprop="description" content="my pgp key!">
+    <meta itemprop="image" content="https://ellieismad13.top/me.jpeg">
+    <link rel="apple-touch-icon" sizes="128x128" href="me_128x128.jpeg">
+
+    <meta property="og:title" content="ellieismad13.top">
+    <meta property="og:description" content="my pgp key!">
+    <meta property="og:image" content="https://ellieismad13.top/me.jpeg">
+    <meta property="og:url" content="https://ellieismad13.top">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ellieismad13.top">
+    <meta property="og:locale" content="en_GB">
+
+    <title>✧ ellieismad13.top | encrypt me pls ✧</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+
+    <!-- favicon me.jpeg -->
+    <link rel="icon" type="image/jpeg" href="me.jpeg" />
+
+    <link rel="stylesheet" href="newcat.css">
+    <link rel="stylesheet" href="newcommon.css">
+    <link rel="stylesheet" href="quirky.css">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="intro">
+        <div class="me" title="do not click this"></div>
+        <div class="grow">
+          <h1 title="this domain cost me €2.50">✿ ellieismad13.top ✿</h1>
+          <div class="marquee"><span>"acts like a bottom to lure other bottoms"</span></div>
+        </div>
+
+        <div class="cat-face" title="(the cat is saying the message)">
+          <div class="cat-ear left"></div>
+          <div class="cat-ear right"></div>
+          <div class="cat-eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+          </div>
+          <div class="cat-nose"></div>
+          <div class="cat-blush-r"></div>
+          <div class="cat-blush-l"></div>
+          <div class="cat-mouth"></div>
+
+          <div class="fingers">
+            <span class="finger left">👉</span>
+            <span class="finger right">👈</span>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <div id="splow">meow!</div>
+
+      <h3>✧ my pgp public key !!1 ✧</h3>
+      <div class="meow">xoxo</div>
+
+      <div id="pgp-key" class="pgp-text overflow-hidden">
+        <div class="top-header-hidden"></div>
+        <div class="top-header"></div>
+        <div class="key-content"></div>
+        <div class="bottom-footer"></div>
+        <div class="bottom-footer-hidden"></div>
+      </div>
+      <div class="toggle-key" onclick="toggleKey()" title="show the whole fucking key">show full key</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/openpgp@6.1.1/dist/openpgp.min.js"></script>
+    <script>
+      let pubkeyArmored = '';
+
+      async function loadKey() {
+        try {
+          const res = await fetch('/key.pub');
+          if (!res.ok) throw new Error('failed to fetch key');
+          pubkeyArmored = await res.text();
+
+          // parse the header and footer and key content and place them accordingly
+          const header = pubkeyArmored.match(/-----BEGIN PGP PUBLIC KEY BLOCK-----/);
+          const footer = pubkeyArmored.match(/-----END PGP PUBLIC KEY BLOCK-----/);
+          const keyContent = pubkeyArmored.replace(header[0], '').replace(footer[0], '').trim();
+
+          // pubkeyArmored = pubkeyArmored.replace(header[0], '').replace(footer[0], '').trim();
+
+          document.querySelector('#pgp-key .key-content').textContent = "\n" + keyContent + "\n\n";
+          document.querySelector('#pgp-key .top-header-hidden').textContent = header[0].trim();
+          document.querySelector('#pgp-key .bottom-footer-hidden').textContent = footer[0].trim();
+
+          // empty the top-header and bottom-footer
+          document.querySelector('#pgp-key .top-header').textContent = '';
+          document.querySelector('#pgp-key .bottom-footer').textContent = '';
+
+          // for top-header and bottom-footer, put each character in a span
+          for (let char of header[0].trim()) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            document.querySelector('#pgp-key .top-header').appendChild(span);
+          }
+          for (let char of footer[0].trim()) {
+            const span = document.createElement('span');
+            span.textContent = char;
+            document.querySelector('#pgp-key .bottom-footer').appendChild(span);
+          }
+        } catch (err) {
+          console.error('Failed to load PGP key:', err);
+          document.querySelector('#pgp-key .key-content').textContent = 'failed to load key. meow :(';
+          showMeowSplash('key load failed. meow :(');
+        }
+
+        // test. put some text in plaintext
+        // document.getElementById('plaintext').value = 'hello, this is a test message. please encrypt me!';
+        // encryptText(); // call encryptText to show the key in the output
+      }
+
+      function toggleKey() {
+        const pre = document.getElementById('pgp-key');
+        pre.classList.toggle('expanded');
+
+        const toggle = document.querySelector('.toggle-key');
+        toggle.textContent = pre.classList.contains('expanded') ? 'hide key' : 'show full key';
+        toggle.title = pre.classList.contains('expanded') ? 'hide the whole fucking key' : 'show the whole fucking key';
+      }
+
+      function showMeowSplash(text, extr) {
+        const splow = document.getElementById('splow');
+        splow.textContent = text || 'meow!';
+        splow.classList.add('show');
+        setTimeout(() => {
+          splow.classList.remove('show');
+        }, 300 + (text ? text.length * 35 : 0) + (extr || 0));
+      }
+
+      document.querySelector('.me').addEventListener('click', function () {
+        showMeowSplash(null, 500);
+        // add .neon to body for 3 seconds
+        document.body.classList.add('neon');
+        setTimeout(() => {
+          document.body.classList.remove('neon');
+        }, 1500);
+      });
+
+      loadKey();
+
+      document.getElementById('pgp-key').addEventListener('click', function () {
+        const range = document.createRange();
+        range.selectNodeContents(this);
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+      });
+
+      function copyOutput() {
+        const output = document.getElementById('output');
+        // get all the text but without the hidden spans
+        const textToCopy = "\n" + output.querySelector('.top-header').textContent.trim() + "\n\n" + output.querySelector('.key-content').textContent.trim() + "\n\n" + output.querySelector('.bottom-footer').textContent.trim();
+        navigator.clipboard.writeText(textToCopy).then(() => showMeowSplash('copied. meow!')).catch(() => showMeowSplash('copy failed. meow. :('));
+      }
+    </script>
+
+  </body>
+
+</html>
